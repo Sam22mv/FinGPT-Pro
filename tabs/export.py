@@ -11,6 +11,7 @@ from utils.portfolio_helper import get_mock_financial_metrics, get_financial_met
 from utils.pdf_helper import extract_text_from_pdfs
 from openai import OpenAI
 from dotenv import load_dotenv
+import plotly.io as pio
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -77,7 +78,13 @@ def export_tab():
             trend_fig.update_layout(title=f"{ticker} – Historical Financial Trends")
 
             chart_path = f"{ticker}_trend_temp.png"
-            trend_fig.write_image(chart_path)
+            pio.kaleido.scope.default_format = "png"
+            pio.kaleido.scope.default_width = 700
+            pio.kaleido.scope.default_height = 500
+            pio.kaleido.scope.default_scale = 1
+
+            with open(chart_path, "wb") as f:
+                f.write(pio.to_image(trend_fig, format="png"))
 
             # Setup PDF canvas
             buffer = io.BytesIO()
