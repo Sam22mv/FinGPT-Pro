@@ -13,6 +13,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import plotly.io as pio
 
+
+
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -78,6 +80,7 @@ def export_tab():
             trend_fig.update_layout(title=f"{ticker} – Historical Financial Trends")
 
             chart_path = f"{ticker}_trend_temp.png"
+            pio.kaleido.scope.chromium_args = ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"]
             pio.kaleido.scope.default_format = "png"
             pio.kaleido.scope.default_width = 700
             pio.kaleido.scope.default_height = 500
