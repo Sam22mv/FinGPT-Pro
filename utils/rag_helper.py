@@ -41,19 +41,20 @@ def build_rag_chain_from_text(text):
 
 def search_keywords_in_pdf(text, keyword):
     """
-    Perform semantic keyword search on PDF text and return
-    the top 5 most relevant document chunks.
-
-    Returns a list of Document objects.
+    Perform semantic keyword search on PDF text using GPT-4o and return
+    a well-structured answer instead of raw chunks.
     """
-    # Step 1: Split text into documents with overlap for context
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     docs = splitter.create_documents([text])
 
-    # Step 2: Create embeddings and FAISS vector store
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     vectorstore = FAISS.from_documents(docs, embeddings)
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
-    # Step 3: Perform semantic similarity search
-    results = vectorstore.similarity_search(keyword, k=5)
-    return results
+    llm = ChatOpenAI(model_name="gpt-4o", temperature=0, openai_api_key=openai_api_key)
+
+    qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
+
+    # Let GPT answer with structured response
+    answer = qa_chain.run(f"Give a detailed structured answer based on the keyword: '{keyword}'")
+    return [Document(page_content=answer)]

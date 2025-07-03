@@ -13,7 +13,7 @@ def keyword_search_tab():
         return
 
     keyword = st.text_input("Enter a keyword or phrase to search:")
-    
+
     if st.button("Search") and keyword.strip():
         for ticker in tickers:
             pdf = pdf_mapping.get(ticker)
@@ -30,18 +30,11 @@ def keyword_search_tab():
                 if not matches:
                     st.markdown("❌ No matches found.")
                 else:
-                    for i, doc in enumerate(matches):
-                        snippet = doc.page_content.strip()
-                        if len(snippet) > 500:
-                            snippet = snippet[:500] + "..."
-                        st.markdown(f"**Match {i+1}:**")
-                        st.code(snippet)
-                        st.markdown("---")
+                    st.markdown("#### 🧠 GPT-4o Answer:")
+                    st.markdown(matches[0].page_content.strip())
 
-                # Save result to session state for export tab
-                combined_results = "\n\n".join(doc.page_content.strip()[:500] + "..." if len(doc.page_content.strip()) > 500 else doc.page_content.strip() for doc in matches)
-                st.session_state[f"keyword_result_{ticker}"] = combined_results or "No keyword matches found"
+                    # Save result for export tab
+                    st.session_state[f"keyword_result_{ticker}"] = matches[0].page_content.strip()
 
             except Exception as e:
                 st.error(f"❌ Error searching in {ticker}: {e}")
-
