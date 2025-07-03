@@ -81,10 +81,10 @@ def export_tab():
 
             chart_path = f"{ticker}_trend_temp.png"
             pio.kaleido.scope.chromium_args = ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"]
-            pio.kaleido.scope.default_format = "png"
-            pio.kaleido.scope.default_width = 700
-            pio.kaleido.scope.default_height = 500
-            pio.kaleido.scope.default_scale = 1
+            pio.defaults.format = "png"
+            pio.defaults.width = 700
+            pio.defaults.height = 500
+            pio.defaults.scale = 1
 
             with open(chart_path, "wb") as f:
                 f.write(pio.to_image(trend_fig, format="png"))
