@@ -1,13 +1,13 @@
 # utils/rag_helper.py
 
+import os
+from dotenv import load_dotenv
 from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.docstore.document import Document
-import os
-from dotenv import load_dotenv
 
 # Load OpenAI API key
 load_dotenv()
@@ -21,15 +21,12 @@ def build_rag_chain_from_text(text):
 
     Returns a RetrievalQA chain object.
     """
-    # Step 1: Split text into chunks for embedding
     splitter = CharacterTextSplitter(separator="\n", chunk_size=1000, chunk_overlap=100)
     chunks = splitter.split_text(text)
 
-    # Step 2: Create embeddings and FAISS vector store
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     vector_store = FAISS.from_texts(chunks, embedding=embeddings)
 
-    # Step 3: Initialize GPT-4o based retriever QA chain
     llm = ChatOpenAI(model_name="gpt-4o", temperature=0, openai_api_key=openai_api_key)
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
@@ -41,20 +38,29 @@ def build_rag_chain_from_text(text):
 
 def search_keywords_in_pdf(text, keyword):
     """
-    Perform semantic keyword search on PDF text using GPT-4o and return
-    a well-structured answer instead of raw chunks.
+    Perform semantic keyword search on PDF text and return
+    a structured GPT-4o response based on the top 5 chunks.
+
+    Returns a list with a single Document containing the structured answer.
     """
+    # Step 1: Split PDF text into overlapping chunks
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     docs = splitter.create_documents([text])
 
+    # Step 2: Embed and store chunks in FAISS
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     vectorstore = FAISS.from_documents(docs, embeddings)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
+    # Step 3: Use GPT-4o to answer based on retrieved chunks
     llm = ChatOpenAI(model_name="gpt-4o", temperature=0, openai_api_key=openai_api_key)
-
     qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
 
-    # Let GPT answer with structured response
-    answer = qa_chain.run(f"Give a detailed structured answer based on the keyword: '{keyword}'")
+    # Ask GPT to generate a structured summary based on keyword
+    prompt = f"""
+    Provide a well-structured, insightful summary of how the keyword **'{keyword}'** is discussed in the report.
+    Use bullet points if necessary. Keep it concise but informative.
+    """
+    answer = qa_chain.run(prompt.strip())
+
     return [Document(page_content=answer)]
