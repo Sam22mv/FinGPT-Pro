@@ -39,11 +39,11 @@ def build_rag_chain_from_text(text):
 def search_keywords_in_pdf(text, keyword):
     """
     Perform semantic keyword search on PDF text and return
-    a structured GPT-4o response based on the top 5 chunks.
+    5 structured GPT-4o responses, one per matched chunk.
 
-    Returns a list with a single Document containing the structured answer.
+    Returns a list of Document objects.
     """
-    # Step 1: Split PDF text into overlapping chunks
+    # Step 1: Split text into chunks
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     docs = splitter.create_documents([text])
 
@@ -52,15 +52,28 @@ def search_keywords_in_pdf(text, keyword):
     vectorstore = FAISS.from_documents(docs, embeddings)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
-    # Step 3: Use GPT-4o to answer based on retrieved chunks
+    # Step 3: Use GPT-4o to answer for each top chunk
     llm = ChatOpenAI(model_name="gpt-4o", temperature=0, openai_api_key=openai_api_key)
-    qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
 
-    # Ask GPT to generate a structured summary based on keyword
-    prompt = f"""
-    Provide a well-structured, insightful summary of how the keyword **'{keyword}'** is discussed in the report.
-    Use bullet points if necessary. Keep it concise but informative.
-    """
-    answer = qa_chain.run(prompt.strip())
+    # Get top 5 chunks semantically related to keyword
+    top_docs = retriever.get_relevant_documents(keyword)
+    answers = []
 
-    return [Document(page_content=answer)]
+    for i, doc in enumerate(top_docs):
+        prompt = f"""
+        You are reading a company annual report.
+
+        From the following report excerpt, generate a **clear, structured response** related to the keyword: **'{keyword}'**
+
+        Keep your answer informative and concise using bullet points if appropriate.
+
+        Document Chunk:
+        \"\"\"
+        {doc.page_content}
+        \"\"\"
+        """
+
+        response = llm.predict(prompt.strip())
+        answers.append(Document(page_content=response.strip()))
+
+    return answers

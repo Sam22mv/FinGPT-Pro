@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.pdf_helper import extract_text_from_pdfs
-from utils.rag_helper import build_rag_chain_from_text
+from utils.rag_helper import search_keywords_in_pdf 
 
 def keyword_search_tab():
     st.header("🔍 Keyword Search in Annual Reports")
@@ -25,23 +25,21 @@ def keyword_search_tab():
                 st.markdown(f"### 🏢 {ticker}")
                 st.markdown("⏳ Searching...")
 
-                # Extract and embed the full PDF text
                 text = extract_text_from_pdfs([pdf])
-                qa_chain = build_rag_chain_from_text(text)
+                matches = search_keywords_in_pdf(text, keyword)
 
-                # Ask GPT-4o to give structured answer
-                prompt = (
-                    f"Summarize all useful insights and mentions related to the keyword: '{keyword}' "
-                    f"in this company's annual report. Use bullet points or paragraph structure where suitable."
-                )
-                gpt_answer = qa_chain.run(prompt.strip())
-
-                st.markdown("#### 🧠 GPT-4o Answer:")
-                if gpt_answer:
-                    st.markdown(gpt_answer)
-                    st.session_state[f"keyword_result_{ticker}"] = gpt_answer
-                else:
+                if not matches:
                     st.markdown("❌ No relevant information found.")
+                else:
+                    all_results = []
+                    for i, doc in enumerate(matches):
+                        st.markdown(f"**🔹 GPT Match {i+1}:**")
+                        st.write(doc.page_content.strip())
+                        all_results.append(doc.page_content.strip())
+                        st.markdown("---")
+
+                    st.session_state[f"keyword_result_{ticker}"] = "\n\n".join(all_results)
 
             except Exception as e:
                 st.error(f"❌ Error processing {ticker}: {e}")
+
