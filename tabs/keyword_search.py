@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.pdf_helper import extract_text_from_pdfs
-from utils.rag_helper import search_keywords_in_pdf 
+from utils.rag_helper import search_keywords_in_pdf
 
 def keyword_search_tab():
     st.header("🔍 Keyword Search in Annual Reports")
@@ -31,15 +31,16 @@ def keyword_search_tab():
                 if not matches:
                     st.markdown("❌ No relevant information found.")
                 else:
-                    all_results = []
+                    combined_output = []
                     for i, doc in enumerate(matches):
-                        st.markdown(f"**🔹 GPT Match {i+1}:**")
-                        st.write(doc.page_content.strip())
-                        all_results.append(doc.page_content.strip())
+                        st.markdown(f"**🔹 GPT Answer {i+1}:**")
+                        st.write(doc.page_content)
+                        combined_output.append(doc.page_content)
                         st.markdown("---")
 
-                    st.session_state[f"keyword_result_{ticker}"] = "\n\n".join(all_results)
+                    st.session_state[f"keyword_result_{ticker}"] = "\n\n".join(combined_output)
 
             except Exception as e:
                 st.error(f"❌ Error processing {ticker}: {e}")
+
 

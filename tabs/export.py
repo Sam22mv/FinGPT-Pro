@@ -80,7 +80,6 @@ def export_tab():
             trend_fig.update_layout(title=f"{ticker} – Historical Financial Trends")
 
             chart_path = f"{ticker}_trend_temp.png"
-            pio.kaleido.scope.chromium_args = ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"]
             pio.defaults.format = "png"
             pio.defaults.width = 700
             pio.defaults.height = 500
