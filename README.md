@@ -15,8 +15,10 @@ Built for financial analysts, researchers, and investors who need deep insights 
 
 ## 🚀 Live Demo
 
-🔗 **[Streamlit App](https://fingpt-pro.streamlit.app)**  
+🔗 **[Streamlit App]([https://fingpt-pro.streamlit.app](https://fingpt-pro-fpjj53nvp44pemdbygfn7a.streamlit.app/))**  
 📂 Upload PDFs → 🧠 Ask Financial Questions → 📄 Export Reports
+
+## 📹 Video Demo
 
 ---
 
