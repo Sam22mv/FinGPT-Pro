@@ -1,50 +1,48 @@
 # 💼 FinGPT Pro – AI-Powered Financial Report Analyzer 📊🧠
 
-FinGPT Pro is a powerful AI application that analyzes **annual reports** using **GPT-4o** and **RAG (Retrieval-Augmented Generation)** to deliver:
+FinGPT Pro is an AI-powered Streamlit application that transforms **complex annual reports** into **actionable financial intelligence** using **GPT-4o** and **RAG (Retrieval-Augmented Generation)**.
 
-- 🔍 Keyword-specific semantic search
-- 🧠 GPT-4o structured summaries
-- 📊 SWOT analysis
-- 📰 News sentiment analysis
-- 📈 Financial trends visualization
-- 📄 PDF export with a complete report
-
-Built for financial analysts, researchers, and investors who need deep insights from complex financial documents.
+Whether you're a financial analyst, investor, or researcher, FinGPT Pro helps you extract deep insights from corporate financials in seconds.
 
 ---
 
 ## 🚀 Live Demo
 
-🔗 **[Streamlit App]([https://fingpt-pro.streamlit.app](https://fingpt-pro-fpjj53nvp44pemdbygfn7a.streamlit.app/))**  
-📂 Upload PDFs → 🧠 Ask Financial Questions → 📄 Export Reports
-
-## 📹 Video Demo
+🔗 **[Try the App on Streamlit →](https://fingpt-pro-fpjj53nvp44pemdbygfn7a.streamlit.app/)**  
+📂 Upload Annual Reports → 💬 Ask Questions → 📄 Export Custom Reports
 
 ---
 
-## 📌 Features
+## 🎥 Video Demo
 
-| Feature                     | Description |
-|----------------------------|-------------|
-| 🔍 **Keyword Search (GPT + RAG)** | Search any keyword like "profit", "AI", or "dividend" and get GPT-4o structured answers based on PDF content |
-| 🧠 **Q&A Summary**           | GPT-generated summary of the full annual report |
-| 📊 **SWOT Analysis**         | GPT-4o generates Strengths, Weaknesses, Opportunities, Threats |
-| 📰 **News Sentiment**        | Fetches recent headlines and analyzes sentiment using GPT |
-| 📈 **Financial Charts**      | Trendlines for Revenue, Profit, EPS using Plotly |
-| 📄 **PDF Export**            | Full report downloadable in a clean PDF format |
+📹 *Coming soon – walkthrough video demo with features*
 
 ---
 
-## 🛠️ Tech Stack
+## ✅ Features
 
-- **Frontend**: Streamlit
-- **LLM**: OpenAI GPT-4o
+| Feature                         | Description |
+|---------------------------------|-------------|
+| 🔍 **Keyword Search (GPT + RAG)** | Search any financial term (e.g. `profit`, `dividend`, `AI`) and get 5 GPT-4o structured answers from the PDF |
+| 🧠 **Q&A Summary**               | GPT-4o summarizes the entire annual report into key insights |
+| 📊 **SWOT Analysis**             | Auto-generated Strengths, Weaknesses, Opportunities, and Threats |
+| 📰 **News Sentiment**            | Fetches and analyzes live news headlines related to the company |
+| 📈 **Financial Charts**          | Visual trends for Revenue, Net Profit, and EPS using Plotly |
+| 📄 **PDF Export**                | Download a polished report with all sections and graphs included |
+
+---
+
+## 🧠 Tech Stack
+
+- **LLM Engine**: OpenAI `gpt-4o`
+- **Framework**: Streamlit
 - **RAG Pipeline**: LangChain + FAISS
-- **Embedding**: OpenAI Embeddings
-- **Vector Store**: FAISS
+- **PDF Parsing**: PyMuPDF (fitz)
+- **Embedding Model**: OpenAI Embeddings
+- **Vector DB**: FAISS
 - **PDF Generation**: ReportLab
-- **Charting**: Plotly
-- **News & Data**: yFinance, Google News
+- **Charts**: Plotly
+- **News + Data**: yFinance, Google News, GPT sentiment tagging
 
 ---
 
@@ -53,19 +51,48 @@ Built for financial analysts, researchers, and investors who need deep insights 
 ```bash
 FinGPT-Pro/
 │
-├── app.py                         # Main Streamlit app entry point
+├── app.py                         # Main Streamlit app
 ├── tabs/
-│   ├── summary.py                 # GPT-based summary
-│   ├── swot.py                    # SWOT analysis via GPT
-│   ├── keyword_search.py          # Keyword search via RAG
-│   └── export.py                  # Generate and download PDF
+│   ├── summary.py                 # GPT Q&A summarization
+│   ├── swot.py                    # GPT-based SWOT
+│   ├── keyword_search.py          # Keyword search (RAG)
+│   └── export.py                  # PDF generation
 │
 ├── utils/
-│   ├── rag_helper.py              # RAG logic and GPT integration
-│   ├── pdf_helper.py              # Extract text from PDF files
-│   ├── portfolio_helper.py        # Get financial metrics
+│   ├── rag_helper.py              # Vector DB + GPT querying
+│   ├── pdf_helper.py              # Extract raw text from PDFs
+│   ├── portfolio_helper.py        # Financial data retrieval
 │
 ├── data/                          # Uploaded PDFs
-├── requirements.txt
-├── .env                           # Your API key
+├── requirements.txt               # Python dependencies
+├── .env                           # OpenAI API key (do not share)
 └── README.md
+
+
+---
+
+## ⚙️ Getting Started (Local Setup)
+
+Follow these steps to run the project locally:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Sam22mv/FinGPT-Pro.git
+cd FinGPT-Pro
+
+# 2. Create a virtual environment
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Add your OpenAI API key
+echo OPENAI_API_KEY=your-key-here > .env
+
+# 5. Run the Streamlit app
+streamlit run app.py
+
