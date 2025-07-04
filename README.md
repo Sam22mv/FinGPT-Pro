@@ -74,7 +74,6 @@ Unlike most apps, you can **download a clean report** with summaries, GPT answer
 
 Follow these steps to run the project locally:
 
-```bash
 # 1. Clone the repository
 git clone https://github.com/Sam22mv/FinGPT-Pro.git
 cd FinGPT-Pro
@@ -94,6 +93,8 @@ echo OPENAI_API_KEY=your-key-here > .env
 
 # 5. Run the Streamlit app
 streamlit run app.py
+
+```bash
 
 ```bash
 FinGPT-Pro/
