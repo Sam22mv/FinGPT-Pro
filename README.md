@@ -15,7 +15,7 @@ Whether you're a financial analyst, investor, or researcher, FinGPT Pro helps yo
 
 ## 🎥 Video Demo
 
-🔗 **[Watch it here →]([https://fingpt-pro-fpjj53nvp44pemdbygfn7a.streamlit.app](https://drive.google.com/file/d/11GEUI_MYx1jQXZx80ucBXQ6DWJzW6K58/view?usp=sharing)** 
+🔗 **[Watch it here →](https://drive.google.com/file/d/11GEUI_MYx1jQXZx80ucBXQ6DWJzW6K58/view?usp=sharing)** 
 ---
 
 ## ✅ Features
