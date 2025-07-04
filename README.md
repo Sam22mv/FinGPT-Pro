@@ -70,6 +70,30 @@ FinGPT-Pro/
 
 
 ---
+## 🧠💡 What Makes FinGPT Pro Different?
+
+Most LLM projects are either chatbots or basic PDF summarizers.
+
+FinGPT Pro stands apart:
+
+### 1. ✅ Document-grounded RAG  
+No hallucinations. Every answer comes **only from your uploaded PDF**, not the internet.
+
+### 2. ✅ Interactive & Structured  
+Supports **semantic keyword search** across the document, not just basic keyword matching.
+
+### 3. ✅ GPT-4o + LangChain Stack  
+Uses a full **RAG pipeline**: FAISS for top-k retrieval + GPT-4o for clean summaries.
+
+### 4. ✅ Built for Finance  
+Includes **domain-specific features** like SWOT, charts, news sentiment, and mock financials.
+
+### 5. ✅ Full Exportable Report  
+Unlike most apps, you can **download a clean report** with summaries, GPT answers, and visuals.
+
+---
+
+
 
 ## ⚙️ Getting Started (Local Setup)
 
@@ -92,6 +116,9 @@ pip install -r requirements.txt
 
 # 4. Add your OpenAI API key
 echo OPENAI_API_KEY=your-key-here > .env
+
+
+
 
 # 5. Run the Streamlit app
 streamlit run app.py
