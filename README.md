@@ -69,31 +69,6 @@ Includes **domain-specific features** like SWOT, charts, news sentiment, and moc
 ### 5. ✅ Full Exportable Report  
 Unlike most apps, you can **download a clean report** with summaries, GPT answers, and visuals.
 
----
-## ⚙️ Getting Started (Local Setup)
-
-Follow these steps to run the project locally:
-
-# 1. Clone the repository
-git clone https://github.com/Sam22mv/FinGPT-Pro.git
-cd FinGPT-Pro
-
-# 2. Create a virtual environment
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Add your OpenAI API key
-echo OPENAI_API_KEY=your-key-here > .env
-
-# 5. Run the Streamlit app
-streamlit run app.py
-
 ```bash
 
 ```bash
