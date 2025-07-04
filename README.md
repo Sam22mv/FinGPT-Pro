@@ -48,28 +48,6 @@ Whether you're a financial analyst, investor, or researcher, FinGPT Pro helps yo
 
 ## 📂 Project Structure
 
-```bash
-FinGPT-Pro/
-│
-├── app.py                         # Main Streamlit app
-├── tabs/
-│   ├── summary.py                 # GPT Q&A summarization
-│   ├── swot.py                    # GPT-based SWOT
-│   ├── keyword_search.py          # Keyword search (RAG)
-│   └── export.py                  # PDF generation
-│
-├── utils/
-│   ├── rag_helper.py              # Vector DB + GPT querying
-│   ├── pdf_helper.py              # Extract raw text from PDFs
-│   ├── portfolio_helper.py        # Financial data retrieval
-│
-├── data/                          # Uploaded PDFs
-├── requirements.txt               # Python dependencies
-├── .env                           # OpenAI API key (do not share)
-└── README.md
-
-
----
 ## 🧠💡 What Makes FinGPT Pro Different?
 
 Most LLM projects are either chatbots or basic PDF summarizers.
@@ -92,9 +70,6 @@ Includes **domain-specific features** like SWOT, charts, news sentiment, and moc
 Unlike most apps, you can **download a clean report** with summaries, GPT answers, and visuals.
 
 ---
-
-
-
 ## ⚙️ Getting Started (Local Setup)
 
 Follow these steps to run the project locally:
@@ -117,9 +92,26 @@ pip install -r requirements.txt
 # 4. Add your OpenAI API key
 echo OPENAI_API_KEY=your-key-here > .env
 
-
-
-
 # 5. Run the Streamlit app
 streamlit run app.py
 
+```bash
+FinGPT-Pro/
+│
+├── app.py                         # Main Streamlit app
+├── tabs/
+│   ├── summary.py                 # GPT Q&A summarization
+│   ├── swot.py                    # GPT-based SWOT
+│   ├── keyword_search.py          # Keyword search (RAG)
+│   └── export.py                  # PDF generation
+│
+├── utils/
+│   ├── rag_helper.py              # Vector DB + GPT querying
+│   ├── pdf_helper.py              # Extract raw text from PDFs
+│   ├── portfolio_helper.py        # Financial data retrieval
+│
+├── data/                          # Uploaded PDFs
+├── requirements.txt               # Python dependencies
+├── .env                           # OpenAI API key (do not share)
+└── README.md
+---
